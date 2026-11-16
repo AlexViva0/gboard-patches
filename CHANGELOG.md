@@ -1,3 +1,13 @@
+## [4.3.1](https://github.com/AlexViva0/gboard-patches/compare/v4.3.0...v4.3.1) (2026-11-15)
+
+### ✨ New Features
+
+* **Frosted Glass:** real blur on Samsung One UI using its own SemBlurInfo window blur, since One UI disables AOSP cross-window blur.
+
+## [4.3.0](https://github.com/AlexViva0/gboard-patches/releases/tag/v4.3.0) (2026-11-15) — audited fork
+
+* Fork of jasonwu1994/Gboard-patches 4.3.0 without Web Clipboard, FTP Server and the QuickJS engine. See FORK.md.
+
 ## [4.3.0](https://github.com/jasonwu1994/Gboard-patches/compare/v4.2.0...v4.3.0) (2026-11-12)
 
 ### ✨ New Features

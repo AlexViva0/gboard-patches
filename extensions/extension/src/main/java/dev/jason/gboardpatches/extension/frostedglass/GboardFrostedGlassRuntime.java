@@ -774,6 +774,29 @@ public final class GboardFrostedGlassRuntime {
             }
             if (joined) shape = shape.withoutBottomCorners();
             applyThemeOpacity(decor, keyboardRoot, customOpacity, state);
+            // Samsung One UI: AOSP cross-window blur is disabled at the system level, so the
+            // AOSP drawable below would only make the panel transparent. Use One UI's own
+            // compositor blur instead when it is present.
+            if (!canUseBackgroundBlur(keyboardRoot.getContext()) && GboardSamsungBlur.isAvailable()) {
+                if (state.samsungBlurView == keyboardRoot && state.applied
+                        && state.localRadiusPx == radiusPx && shape.sameGeometry(state.localShape)) {
+                    return true;
+                }
+                if (state.samsungBlurView != null && state.samsungBlurView != keyboardRoot) {
+                    GboardSamsungBlur.clear(state.samsungBlurView);
+                    state.samsungBlurView = null;
+                }
+                if (GboardSamsungBlur.apply(keyboardRoot, radiusPx, shape)) {
+                    state.samsungBlurView = keyboardRoot;
+                    state.localRadiusPx = radiusPx;
+                    state.localShape = shape;
+                    state.applied = true;
+                    Log.i(TAG, "applied Samsung radius=" + radiusPx + " corners="
+                            + shape.topLeft + "," + shape.topRight + ","
+                            + shape.bottomLeft + "," + shape.bottomRight);
+                    return true;
+                }
+            }
             if (state.localRenderNode != null && state.localRenderRoot == keyboardRoot
                     && state.localRadiusPx == radiusPx && shape.sameGeometry(state.localShape)) {
                 return state.applied;
@@ -1269,6 +1292,11 @@ public final class GboardFrostedGlassRuntime {
         state.navigation.clear();
         state.navigationJoined = false;
         restoreAlphas(state.originalSurfaceAlphas);
+        if (state.samsungBlurView != null) {
+            View samsungView = state.samsungBlurView;
+            state.samsungBlurView = null;
+            GboardSamsungBlur.clear(samsungView);
+        }
         if (state.localBlurView != null && state.localBlurDrawable != null) {
             cleanupStep(() -> {
                 if (state.localBlurView.getBackground() == state.localCombinedBackground)
@@ -1683,6 +1711,7 @@ public final class GboardFrostedGlassRuntime {
         ViewTreeObserver preDrawTree;
         ViewTreeObserver.OnPreDrawListener preDrawObserver;
         View localBlurView;
+        View samsungBlurView;
         Object localRenderNode;
         Object localBlurDrawable;
         Object localBlurWindowToken;

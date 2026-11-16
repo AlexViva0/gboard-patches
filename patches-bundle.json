@@ -1,8 +1,8 @@
 {
-    "created_at": "2026-11-15T00:00:00",
-    "description": "Fork auditado de jasonwu1994/Gboard-patches v4.3.0 (commit 463269a) sin Web Clipboard, FTP Server ni el motor QuickJS.",
-    "download_url": "https://github.com/AlexViva0/gboard-patches/releases/download/v4.3.0/patches-4.3.0.mpp",
+    "created_at": "2026-11-15T21:00:00",
+    "description": "### ✨ Nuevo\n\n* **Vidrio esmerilado:** desenfoque real en Samsung One UI. One UI desactiva el desenfoque estándar de Android, así que el efecto solo hacía el teclado transparente; ahora usa el desenfoque propio de Samsung (SemBlurInfo), respetando la intensidad, la transparencia y las esquinas redondeadas. En otros teléfonos no cambia nada.\n\n### ℹ️ Nota\n\n* \"Extender a la barra de navegación\" todavía usa el desenfoque estándar, así que en Samsung esa franja solo se ve transparente.",
+    "download_url": "https://github.com/AlexViva0/gboard-patches/releases/download/v4.3.1/patches-4.3.1.mpp",
     "signature_download_url": "",
-    "version": "4.3.0",
+    "version": "4.3.1",
     "public_key": "qqcfX3de97teZikBhYUGm0i8httc4zvS5JC7cmhgEuo="
 }
