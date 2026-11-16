@@ -5,15 +5,15 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/jasonwu1994/Gboard-patches/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/jasonwu1994/Gboard-patches?display_name=tag&label=Release&style=for-the-badge"></a>
-  <a href="https://github.com/jasonwu1994/Gboard-patches"><img alt="Total downloads" src="https://img.shields.io/github/downloads/jasonwu1994/Gboard-patches/total?label=Downloads&style=for-the-badge"></a>
-  <a href="https://morphe.software/add-source?github=jasonwu1994/Gboard-patches"><img alt="Add to Morphe" src="https://img.shields.io/badge/Morphe-Add%20Source-00A8FF?style=for-the-badge"></a>
-  <a href="https://github.com/jasonwu1994/Gboard-patches"><img alt="GitHub stars" src="https://img.shields.io/github/stars/jasonwu1994/Gboard-patches?style=social"></a>
+  <a href="https://github.com/AlexViva0/gboard-patches/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/AlexViva0/gboard-patches?display_name=tag&label=Release&style=for-the-badge"></a>
+  <a href="https://morphe.software/add-source?github=AlexViva0/gboard-patches"><img alt="Add to Morphe" src="https://img.shields.io/badge/Morphe-Add%20Source-00A8FF?style=for-the-badge"></a>
 </p>
 
-<p align="center">
-  <a href="https://ko-fi.com/jasonwu1994"><img height="40" alt="Buy me a coffee on Ko-fi" src="https://storage.ko-fi.com/cdn/kofi5.png?v=3"></a>
-</p>
+> [!IMPORTANT]
+> **Fork auditado** de [jasonwu1994/Gboard-patches](https://github.com/jasonwu1994/Gboard-patches)
+> basado en la versión 4.3.0 (commit `463269a`). Se eliminaron Web Clipboard, el servidor FTP y el
+> motor QuickJS (librería nativa precompilada + puente HTTP). Las releases se compilan en GitHub
+> Actions y van firmadas. Ver [FORK.md](FORK.md).
 
 ## Overview
 
@@ -38,19 +38,6 @@ Features designed and built by this project rather than simply unlocking an exis
 </details>
 
 <details>
-  <summary><code>Web Clipboard</code></summary>
-
-  Hosts a phone-powered Web Clipboard portal that lets desktop browsers sync with Gboard over the same LAN, with a pairing code gate and an optional Quick Settings Tile.
-
-  Preview:
-
-  <img alt="Web Clipboard pairing gate" src="assets/features/web-clipboard/01-pairing-gate.png" width="720">
-
-  <img alt="Web Clipboard conversation view" src="assets/features/web-clipboard/02-conversation-view.png" width="720">
-
-</details>
-
-<details>
   <summary><code>Floating Web Search</code></summary>
 
   Open a floating web page directly from Gboard to quickly search for the information you need.
@@ -69,12 +56,6 @@ Import custom ZIP themes and beautiful themes from the official Rboard repositor
 </details>
 
 <details>
-  <summary><code>FTP Server</code></summary>
-
-  Hosts an FTP server on your phone so desktop FTP clients can browse, upload, download, and resume file transfers over the same LAN. It supports anonymous or password-protected access, a configurable control and passive port range, read-only mode, <code>/sdcard</code> or a user-selected folder as the root, live transfer progress, retained partial uploads, and an optional Quick Settings Tile.
-</details>
-
-<details>
   <summary><code>Long-Press Editing Shortcuts</code></summary>
 
   Add Select all, Undo, Copy, Cut, Paste, and Redo long-press shortcuts to English QWERTY and Zhuyin, with an optional globe-key drag gesture that follows the same physical key positions across supported alphabet layouts.
@@ -90,7 +71,7 @@ Import custom ZIP themes and beautiful themes from the official Rboard repositor
 <details>
   <summary><code>Swipeable Custom Top Row</code></summary>
 
-  Lets you swipe the keyboard top row horizontally to open customizable text and JavaScript slots.
+  Lets you swipe the keyboard top row horizontally to open customizable text slots (JavaScript slots are disabled in this fork).
 </details>
 
 <details>

@@ -136,3 +136,6 @@ local.properties
 # Local Python caches
 __pycache__/
 *.py[cod]
+
+# Morphe bundle signing private key (never commit)
+morphe-signing.key

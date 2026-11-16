@@ -35,7 +35,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import dev.jason.gboardpatches.extension.quickjs.QuickJsNgBridge;
 
 final class GboardQuickJsFeature {
     static final long DEFAULT_TIMEOUT_MS = GboardTopRowSwipeSettings.DEFAULT_TIMEOUT_MS;
@@ -253,22 +252,6 @@ final class GboardQuickJsFeature {
         }
     }
 
-    static Object valueFromNativeResult(QuickJsNgBridge.NativeEvalResult result) {
-        if (result == null) {
-            throw new RuntimeException("QuickJS native bridge returned null");
-        }
-        if (result.timedOut) {
-            String error = result.errorString();
-            throw new QuickJsTimedOutException(error != null
-                    ? error : "QuickJS execution timed out");
-        }
-        if (!result.success) {
-            String error = result.errorString();
-            throw new RuntimeException(error != null ? error : "QuickJS evaluation failed");
-        }
-        return result.valueString();
-    }
-
     static final class QuickJsNgScriptRuntime implements ScriptRuntime {
         private final long timeoutMs;
         private final GboardTopRowSwipeSettings.JavaScriptRuntimeLimits javaScriptRuntimeLimits;
@@ -287,12 +270,8 @@ final class GboardQuickJsFeature {
 
         @Override
         public Object evaluate(String wrappedScript) {
-            return valueFromNativeResult(QuickJsNgBridge.nativeEvaluate(
-                    wrappedScript,
-                    timeoutMs,
-                    javaScriptRuntimeLimits.memoryLimitBytes,
-                    javaScriptRuntimeLimits.maxStackBytes,
-                    javaScriptRuntimeLimits.responseBodyLimitBytes));
+            // The QuickJS native engine (and its HTTP bridge) was removed from this fork.
+            throw new UnsupportedOperationException("JavaScript is disabled in this build");
         }
     }
 

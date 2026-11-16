@@ -61,7 +61,6 @@ class GboardDeveloperOptionsGeneratedInventoryTest {
             "Settings Homepage Override",
             "Swipeable Custom Top Row",
             "Use Bluetooth Microphone",
-            "Web Clipboard",
             "Zhuyin Bottom Row Key Sizes",
             "Zhuyin Quick Traditional/Simplified Toggle",
             "Zhuyin Slide Input",

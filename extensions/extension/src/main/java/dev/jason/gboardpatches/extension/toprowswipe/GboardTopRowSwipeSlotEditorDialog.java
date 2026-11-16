@@ -145,7 +145,8 @@ final class GboardTopRowSwipeSlotEditorDialog {
             commitInput = buildInput(strings.editorCommitHint, currentSlot.commitText);
             useJavaScriptInput = new CheckBox(activity);
             useJavaScriptInput.setText(strings.editorUseJavaScriptLabel);
-            useJavaScriptInput.setChecked(currentSlot.isJavaScript);
+            useJavaScriptInput.setChecked(false);
+            useJavaScriptInput.setVisibility(android.view.View.GONE);
             scriptInput = buildScriptInput(currentSlot.scriptText);
             timeoutInput = buildTimeoutInput(Integer.toString(currentSlot.timeoutMs));
             testInput = buildInput(strings.editorTestInputHint, "");

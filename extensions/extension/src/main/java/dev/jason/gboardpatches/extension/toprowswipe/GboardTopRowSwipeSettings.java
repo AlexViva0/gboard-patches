@@ -154,7 +154,8 @@ public final class GboardTopRowSwipeSettings {
                 String scriptText, int timeoutMs) {
             this.displayText = displayText;
             this.commitText = commitText;
-            this.isJavaScript = isJavaScript;
+            // JavaScript slots are disabled in this fork: the QuickJS engine was removed.
+            this.isJavaScript = false;
             this.scriptText = scriptText;
             this.timeoutMs = timeoutMs;
         }

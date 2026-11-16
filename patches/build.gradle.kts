@@ -193,12 +193,12 @@ val generateGboardVersionBindings = tasks.register<GenerateTargetBindingsTask>(
 
 patches {
     about {
-        name = "Gboard Patches"
-        description = "Morphe patches for Gboard."
-        source = "https://github.com/jasonwu1994/gboard-patches"
-        author = "Jason Wu"
-        contact = "https://github.com/jasonwu1994/gboard-patches/issues"
-        website = "https://github.com/jasonwu1994/gboard-patches"
+        name = "AlexViva0 Gboard Patches"
+        description = "Audited fork of jasonwu1994/Gboard-patches without Web Clipboard, FTP Server or the QuickJS engine."
+        source = "https://github.com/AlexViva0/gboard-patches"
+        author = "AlexViva0 (fork of Jason Wu's Gboard Patches)"
+        contact = "https://github.com/AlexViva0/gboard-patches/issues"
+        website = "https://github.com/AlexViva0/gboard-patches"
         license = "GPLv3"
     }
 }

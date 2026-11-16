@@ -365,35 +365,6 @@ public final class GboardTopRowSwipeRuntimeTest {
     }
 
     @Test
-    public void quickJsConfigCanRecoverFromActiveSessionRow() {
-        Object tracker = new Object();
-        GboardTopRowSwipeRuntime.SESSIONS.put(
-                tracker,
-                new GboardTopRowSwipeRuntime.SwipeSession(
-                        new Object(),
-                        0f,
-                        0f,
-                        GboardTopRowSwipeRuntime.TopRowLayoutKind.ZHUYIN,
-                        6));
-        GboardTopRowSwipeRuntime.SettingsSnapshot snapshot = customJavaScriptSnapshot(
-                6,
-                "return 'ok';",
-                1_500,
-                1000L);
-        GboardTopRowSwipeRuntime.setCurrentPage(
-                GboardTopRowSwipeRuntime.TopRowLayoutKind.ZHUYIN,
-                GboardTopRowSwipeRuntime.TopRowPage.CUSTOM);
-
-        GboardTopRowSwipeRuntime.QuickJsSlotConfig config =
-                GboardTopRowSwipeRuntime.quickJsSlotConfigFromSession(snapshot, tracker);
-
-        assertEquals(6, config.rowIndex);
-        assertEquals(GboardTopRowSwipeRuntime.TopRowLayoutKind.ZHUYIN, config.layoutKind);
-        assertEquals("return 'ok';", config.scriptSource);
-        assertEquals(1_500, config.timeoutMs);
-    }
-
-    @Test
     public void unresolvedQuickJsMarkerConsumesFailClosed() {
         assertTrue(GboardQuickJsFeature.maybeConsumeQuickJsTopRowPress(
                 null,

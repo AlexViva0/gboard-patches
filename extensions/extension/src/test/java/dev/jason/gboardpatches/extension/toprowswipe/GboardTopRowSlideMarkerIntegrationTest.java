@@ -122,38 +122,6 @@ public final class GboardTopRowSlideMarkerIntegrationTest {
         assertFalse(GboardZhuyinSlideRuntime.isPatchedMetadata(rebound));
     }
 
-    @Test
-    public void freshCustomZhuyinBindKeepsTopRowLineageAcrossSlideClone()
-            throws Exception {
-        configureCustomJavaScriptSlot(0);
-        GboardTopRowSwipeRuntime.setCurrentPage(
-                GboardTopRowSwipeRuntime.TopRowLayoutKind.ZHUYIN,
-                GboardTopRowSwipeRuntime.TopRowPage.CUSTOM);
-
-        Object view = GboardZhuyinSlideTargetFixture.newSoftKeyView(
-                RuntimeEnvironment.getApplication());
-        GboardZhuyinSlideTargetFixture.setResourceEntryName(
-                view, FIXTURE_VIEW_ID, "E01");
-        Object base = GboardZhuyinSlideTargetFixture.metadata(
-                0x7f0b2904, "ㄅ", "ㄅ", new String[] {"ㄅ", "1", "!"}, null, null);
-
-        GboardZhuyinSlideTargetFixture.bind(view, base, 55L);
-        Object rebound = GboardZhuyinSlideTargetFixture.boundMetadata(view);
-
-        assertNotSame(base, rebound);
-        assertTrue(GboardZhuyinSlideRuntime.isPatchedMetadata(rebound));
-        assertSame(base,
-                GboardTopRowSwipeRuntime.resolveOriginalKeyMetadataForPatchInterop(rebound));
-        GboardTopRowSwipeRuntime.QuickJsSlotConfig config =
-                GboardTopRowSwipeRuntime.quickJsSlotConfig(rebound);
-        assertNotNull(config);
-        assertEquals(0, config.rowIndex);
-        assertEquals(GboardTopRowSwipeRuntime.TopRowLayoutKind.ZHUYIN, config.layoutKind);
-
-        GboardTopRowSwipeRuntime.afterSoftKeyBound(view);
-        assertTrue(GboardTopRowSwipeRuntime.VISIBLE_TOP_ROW_KEYS.containsKey(view));
-    }
-
     private static void resetRuntimeState() {
         GboardTopRowSwipeRuntime.SESSIONS.clear();
         GboardTopRowSwipeRuntime.VISIBLE_TOP_ROW_KEYS.clear();

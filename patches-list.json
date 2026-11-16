@@ -242,18 +242,6 @@
       "options": []
     },
     {
-      "name": "FTP Server",
-      "description": "新增區域網路 FTP 伺服器，支援檔案瀏覽、傳輸與下載續傳\nAdd a LAN FTP server with file browsing, transfers, and download resume.",
-      "use": true,
-      "dependencies": [],
-      "compatiblePackages": {
-        "com.google.android.inputmethod.latin": [
-          "18.5.4.993608717-release-arm64-v8a"
-        ]
-      },
-      "options": []
-    },
-    {
       "name": "Floating Web Search",
       "description": "直接從 Gboard 開啟懸浮網頁，快速搜尋需要的資訊。\nOpen a floating web page directly from Gboard to quickly search for the information you need.",
       "use": true,
@@ -500,18 +488,6 @@
     {
       "name": "Use Bluetooth Microphone",
       "description": "啟用 語音輸入 -> 使用藍芽麥克風\nEnable Voice typing -> Use Bluetooth microphone.",
-      "use": true,
-      "dependencies": [],
-      "compatiblePackages": {
-        "com.google.android.inputmethod.latin": [
-          "18.5.4.993608717-release-arm64-v8a"
-        ]
-      },
-      "options": []
-    },
-    {
-      "name": "Web Clipboard",
-      "description": "新增手機自架的 Web Clipboard，支援瀏覽器同步、配對碼與快速設定開關\nAdd the phone-hosted Web Clipboard with browser sync, pairing, and a Quick Settings Tile.",
       "use": true,
       "dependencies": [],
       "compatiblePackages": {

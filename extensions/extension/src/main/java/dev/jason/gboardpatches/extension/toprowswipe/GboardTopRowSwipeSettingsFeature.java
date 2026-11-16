@@ -228,9 +228,6 @@ public final class GboardTopRowSwipeSettingsFeature
                                     strings.sectionLayouts,
                                     layoutRows),
                             new GboardPatchesSettingsContract.Section(
-                                    strings.sectionJavaScript,
-                                    javaScriptRows),
-                            new GboardPatchesSettingsContract.Section(
                                     strings.sectionSlots,
                                     slotRows),
                             new GboardPatchesSettingsContract.Section(
@@ -240,12 +237,7 @@ public final class GboardTopRowSwipeSettingsFeature
                                     strings.sectionAdvanced,
                                     null,
                                     GboardPatchesSettingsContract.SectionStyle.ADVANCED,
-                                    advancedRows),
-                            new GboardPatchesSettingsContract.Section(
-                                    strings.sectionJavaScriptGuide,
-                                    null,
-                                    GboardPatchesSettingsContract.SectionStyle.DEFAULT,
-                                    guideRows)),
+                                    advancedRows)),
                     GboardPatchesSettingsContract.RefreshPolicy.none(),
                     GboardPatchesSettingsContract.PanelStyle.FLAT);
         } catch (Throwable throwable) {

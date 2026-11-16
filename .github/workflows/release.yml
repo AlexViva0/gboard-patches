@@ -12,6 +12,8 @@ jobs:
     permissions:
       contents: write
       packages: read
+      id-token: write
+      attestations: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -31,11 +33,12 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Build
+      - name: Build and test
         env:
-          GITHUB_ACTOR: ${{ github.repository_owner }}
-          GITHUB_TOKEN: ${{ secrets.MORPHE_PACKAGES_TOKEN }}
-        run: ./gradlew :patches:buildAndroid generatePatchesList
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MORPHE_SIGNING_KEY: ${{ secrets.MORPHE_SIGNING_KEY }}
+        run: ./gradlew :patches:buildAndroid generatePatchesList test
 
       - name: Validate synced release metadata
         id: metadata
@@ -71,7 +74,19 @@ jobs:
               throw "patches-bundle.json download_url does not match expected public release URL."
           }
           if (-not [string]::IsNullOrEmpty([string]$bundle.signature_download_url)) {
-              throw "patches-bundle.json signature_download_url must be empty for the public repo."
+              throw "patches-bundle.json signature_download_url must be empty (the signature is embedded in the .mpp)."
+          }
+
+          # The bundle must be signed with the key published in morphe-signing.pub.
+          $publicKey = (Get-Content -LiteralPath "morphe-signing.pub" -Raw).Trim()
+          if ([string]$bundle.public_key -ne $publicKey) {
+              throw "patches-bundle.json public_key does not match morphe-signing.pub."
+          }
+          $mpp = "patches/build/libs/patches-$actualVersion.mpp"
+          $bytes = [System.IO.File]::ReadAllBytes($mpp)
+          $tail = [System.Text.Encoding]::ASCII.GetString($bytes, [Math]::Max(0, $bytes.Length - 256), [Math]::Min(256, $bytes.Length))
+          if (-not $tail.Contains("MorpheSig1 $publicKey ")) {
+              throw "$mpp is not signed with morphe-signing.pub (is the MORPHE_SIGNING_KEY secret set?)."
           }
 
           "version=$actualVersion" >> $env:GITHUB_OUTPUT
@@ -82,7 +97,7 @@ jobs:
           $bundle = Get-Content -LiteralPath "patches-bundle.json" -Raw | ConvertFrom-Json
           $notes = [string]$bundle.description
           if ([string]::IsNullOrWhiteSpace($notes)) {
-              $notes = "Public mirror release for $env:GITHUB_REF_NAME."
+              $notes = "Release $env:GITHUB_REF_NAME."
           }
           Set-Content -LiteralPath "release-notes.md" -Value $notes -Encoding utf8
 
@@ -94,3 +109,8 @@ jobs:
           prerelease: ${{ contains(github.ref_name, '-dev.') }}
           files: |
             patches/build/libs/patches-${{ steps.metadata.outputs.version }}.mpp
+
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@v4
+        with:
+          subject-path: patches/build/libs/patches-${{ steps.metadata.outputs.version }}.mpp
