@@ -1,3 +1,9 @@
+## [4.3.2](https://github.com/AlexViva0/gboard-patches/compare/v4.3.1...v4.3.2) (2026-11-16)
+
+### 🐛 Bug Fixes
+
+* **Frosted Glass:** on Samsung, keep the navigation area stock so it no longer clears the panel blur right after it is applied; log failures that clear the effect.
+
 ## [4.3.1](https://github.com/AlexViva0/gboard-patches/compare/v4.3.0...v4.3.1) (2026-11-15)
 
 ### ✨ New Features

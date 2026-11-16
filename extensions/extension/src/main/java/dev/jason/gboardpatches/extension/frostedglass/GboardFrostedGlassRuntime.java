@@ -320,8 +320,9 @@ public final class GboardFrostedGlassRuntime {
                     installPreDrawObserver(window, context, view, state);
                 }
                 if (!state.ready) scheduleFallback(view, window, context, state, generation);
-            } catch (Throwable ignored) {
+            } catch (Throwable failure) {
                 // OEM/old-platform observer failures must not escape a layout traversal.
+                Log.w(TAG, "layout pass failed, clearing: " + failure);
                 cleanupStep(() -> disable(window));
             }
         };
@@ -353,7 +354,8 @@ public final class GboardFrostedGlassRuntime {
                 if (isCurrent(window, state) && !state.hiding && isUserUnlocked(context)) {
                     applyUnlocked(window, context, state);
                 }
-            } catch (Throwable ignored) {
+            } catch (Throwable failure) {
+                Log.w(TAG, "pre-draw pass failed, clearing: " + failure);
                 cleanupStep(() -> disable(window));
             }
             // Never delay showing a keyboard while waiting for an OEM compositor.
@@ -477,7 +479,8 @@ public final class GboardFrostedGlassRuntime {
             applyWindowBlur(window, root, shape, radiusPx, customOpacity, state);
             reconcileWindowStrip(window, root, customOpacity, state);
             state.ready = true;
-        } catch (Throwable ignored) {
+        } catch (Throwable failure) {
+            Log.w(TAG, "apply failed, clearing: " + failure, failure);
             disable(window);
         }
     }
@@ -543,6 +546,19 @@ public final class GboardFrostedGlassRuntime {
     private static boolean applyMiuiLocalBlur(Window window, View decor, View root, int radiusPx,
             int customOpacity, State state) {
         boolean applied = applyKeyboardLocalBlur(window, decor, root, radiusPx, customOpacity, state);
+        if (applied && state.samsungBlurView != null) {
+            // The navigation strip relies on AOSP blur, which One UI disables; extending into
+            // it would only add a transparent band and its Window styling must never undo the
+            // Samsung panel blur. Keep the stock navigation area in this mode.
+            state.navigation.clear();
+            state.navigationJoined = false;
+            cleanupStep(() -> releaseWindowNavigation(window, state));
+            if (!"Samsung blur mode".equals(state.navReason)) {
+                state.navReason = "Samsung blur mode";
+                Log.i(TAG, "navigation kept stock: Samsung blur mode");
+            }
+            return true;
+        }
         boolean navigationApplied = false;
         if (applied && state.navigationEnabled) {
             Drawable theme = state.localBlurDrawable != null
